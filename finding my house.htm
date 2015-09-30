@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta name="viewport" content="initial-scale=1.0">
+	<meta charset="UTF-8">
+	<title>Finding my house</title>
+    
+    <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #map {
+        height: 100%;
+      }
+    </style>
+</head>
+<body>
+	   <div id="map"></div>
+
+
+
+<script>
+
+
+function initMap() {
+
+  var myLatLng = {lat: -36.8429622, lng: 174.7666393};
+  var houseLatLng = {lat: -36.7747493, lng: 174.7131281};
+
+  var map = new google.maps.Map(document.getElementById('map'), {
+    center: myLatLng,
+    crollwheel: false,
+    zoom: 12
+  });
+
+  var marker = new google.maps.Marker({
+    position: myLatLng,
+    map:map,
+    title: "ferry"
+  });
+
+  var infowindow = new google.maps.InfoWindow({
+    content: '<div>Ferry</div>'
+  });
+
+  infowindow.open(map, marker);
+
+  var marker2 = new google.maps.Marker({
+    position:houseLatLng,
+    map:map,
+    title: "home"
+
+  });
+
+  var inforwindow1 = new google.maps.InfoWindow({
+    content: '<div>Home</div>'
+  });
+  inforwindow1.open(map,marker2);
+
+  var directionsDisplay = new google.maps.DirectionsRenderer({
+    map: map
+  });
+
+  var request = {
+    destination: houseLatLng,
+    origin: myLatLng,
+    travelMode: google.maps.TravelMode.DRIVING
+  };
+
+  var directionsService = new google.maps.DirectionsService();
+      directionsService.route(request, function(response, status) {
+
+        if(status == google.maps.DirectionsStatus.OK) {
+          directionsDisplay.setDirections(response);
+        }
+      });
+
+
+
+
+
+
+ 
+
+}
+
+</script>
+
+	<script async defer
+      src="https://maps.googleapis.com/maps/api/js?AIzaSyDXSV9u2RjMTMv3gWegNTsWdRbrdwAmohs&callback=initMap">
+    </script>
+</body>
+</html>
